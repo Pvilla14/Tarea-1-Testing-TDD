@@ -8,8 +8,7 @@ class Cacho:
 
     def __init__(self):
         self.cant_dados = 5
-        for i in range(self.cant_dados):
-            self.dados.append(Dado())
+        self.dados = [Dado() for _ in range(self.cant_dados)]
 
     def ver_cant_dados(self):
         return self.cant_dados
