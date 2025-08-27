@@ -14,4 +14,3 @@ class Dado:
 
     def obtener_valor(self):
         return self.valores[self.valor]
-

@@ -2,7 +2,7 @@ import unittest
 from unittest.mock import patch
 from src.Juego.dado import Dado
 
-class TestDado:
+class TestDado(unittest.TestCase):
 
     def test_crear(self):
         dado = Dado()
@@ -17,4 +17,4 @@ class TestDado:
 
         assert dado.obtener_valor() == "cuadras"
 
-        mock.obtener_valor.assert_called_once()
+        mock.generar.assert_called_once_with(1,6)

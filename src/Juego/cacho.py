@@ -21,3 +21,9 @@ class Cacho:
             return None
         else:
             return [dado.obtener_valor() for dado in self.dados]
+
+    def perder_dado(self):
+        self.cant_dados -= 1
+
+    def agitar(self):
+        self.dados = [Dado() for _ in range(self.cant_dados)]

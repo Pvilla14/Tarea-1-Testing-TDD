@@ -8,7 +8,7 @@ class TestCacho:
         assert cacho is not None
         assert cacho.ver_cant_dados() == 5
 
-    def test_visibles_none(self):
+    def test_visibles_cambio(self):
         cacho = Cacho()
         estado_previo = cacho.visibles
         cacho.cambiar_visibles()
@@ -21,11 +21,14 @@ class TestCacho:
     def test_ver_dados_not_null(self):
         cacho = Cacho()
         cacho.cambiar_visibles()
-        cacho.ver_dados()
+        assert cacho.ver_dados() is not None
 
     def test_agitar(self):
         cacho = Cacho()
+        cacho.cambiar_visibles()
+        dados = cacho.ver_dados()
         cacho.agitar()
+        assert dados != cacho.ver_dados()
 
     def test_perder_dado(self):
         cacho = Cacho()
