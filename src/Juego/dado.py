@@ -1,5 +1,3 @@
-from collections.abc import generator
-
 from src.servicios.generador_aleatorio import GeneradorAleatorio
 
 class Dado:
