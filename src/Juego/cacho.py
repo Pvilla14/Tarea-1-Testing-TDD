@@ -26,4 +26,5 @@ class Cacho:
         self.cant_dados -= 1
 
     def agitar(self):
-        self.dados = [Dado() for _ in range(self.cant_dados)]
+        for dado in self.dados:
+            dado.cambiar_valor()
