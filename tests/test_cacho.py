@@ -33,4 +33,4 @@ class TestCacho:
     def test_perder_dado(self):
         cacho = Cacho()
         cacho.perder_dado()
-        assert cacho.ver_dados() == 4
+        assert cacho.ver_cant_dados() == 4
