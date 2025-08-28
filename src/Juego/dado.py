@@ -1,3 +1,5 @@
+from collections.abc import generator
+
 from src.servicios.generador_aleatorio import GeneradorAleatorio
 
 class Dado:
@@ -14,3 +16,7 @@ class Dado:
 
     def obtener_valor(self):
         return self.valores[self.valor]
+
+    def cambiar_valor(self):
+        generador = GeneradorAleatorio()
+        self.valor = generador.generar(1,6)
