@@ -24,4 +24,7 @@ class ContadorPintas:
                 if valor_dado == pinta:
                     contador += 1
 
+                if usar_comodines and valor_dado == "as" and pinta != "as":
+                    contador += 1
+
         return contador
