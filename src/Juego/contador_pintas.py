@@ -3,6 +3,10 @@ class ContadorPintas:
     Cuenta apariciones de pintas en múltiples cachos.
     """
 
+    def __init__(self):
+        """Inicializa con las pintas válidas del juego."""
+        self.pintas_validas = ["as", "tontos", "trenes", "cuadras", "quinas", "sextos"]
+
     def contar_pinta(self, pinta, cachos, usar_comodines=True):
         """
         Cuenta cuántas veces aparece una pinta específica en todos los cachos.
@@ -14,7 +18,14 @@ class ContadorPintas:
 
         Returns:
             int: Número total de dados con esa pinta
+
+        Raises:
+            ValueError: Si la pinta no es válida
         """
+
+        if pinta not in self.pintas_validas:
+            raise ValueError("Pinta inválida")
+
         contador = 0
 
         for cacho in cachos:
