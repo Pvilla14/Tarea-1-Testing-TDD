@@ -66,3 +66,28 @@ class TestContadorPintas(unittest.TestCase):
         # - 1 "trenes" del cacho2 + 2 "as" comodines = 3
         # Total = 6
         self.assertEqual(resultado, 6)
+
+    def test_validar_pinta_existente_valida(self):
+        contador = ContadorPintas()
+        cachos = []
+
+        try:
+            for pinta_valida in ["as", "tontos", "trenes", "cuadras", "quinas", "sextos"]:
+                contador.contar_pinta(pinta_valida, cachos)
+        except ValueError:
+            self.fail("No debería dar error con pintas válidas")
+
+    def test_validar_pinta_existente_invalida(self):
+        contador = ContadorPintas()
+        cachos = []
+
+        # Pintas inválidas deberían lanzar ValueError
+        with self.assertRaises(ValueError) as context:
+            contador.contar_pinta("pinta_inexistente", cachos)
+
+        self.assertIn("Pinta inválida", str(context.exception))
+
+        with self.assertRaises(ValueError) as context:
+            contador.contar_pinta("", cachos)
+
+        self.assertIn("Pinta inválida", str(context.exception))
