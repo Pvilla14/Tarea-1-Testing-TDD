@@ -34,3 +34,35 @@ class TestContadorPintas(unittest.TestCase):
 
         # Debe contar 4 "trenes" (2 del cacho1 + 2 del cacho2)
         self.assertEqual(resultado, 4)
+
+    @patch("src.Juego.cacho.Dado")
+    def test_contar_pinta_con_comodines(self, MockDado):
+        # Cacho 1: [trenes, as, trenes, quinas, sextos]
+        dados_cacho1 = []
+        for valor in ["trenes", "as", "trenes", "quinas", "sextos"]:
+            mock_dado = MagicMock()
+            mock_dado.obtener_valor.return_value = valor
+            dados_cacho1.append(mock_dado)
+
+        # Cacho 2: [cuadras, as, tontos, trenes, as]
+        dados_cacho2 = []
+        for valor in ["cuadras", "as", "tontos", "trenes", "as"]:
+            mock_dado = MagicMock()
+            mock_dado.obtener_valor.return_value = valor
+            dados_cacho2.append(mock_dado)
+
+        MockDado.side_effect = dados_cacho1 + dados_cacho2
+
+        cacho1 = Cacho()
+        cacho2 = Cacho()
+        cachos = [cacho1, cacho2]
+
+        contador = ContadorPintas()
+
+        resultado = contador.contar_pinta("trenes", cachos)
+
+        # Debe contar 6 "trenes" total:
+        # - 2 "trenes" del cacho1 + 1 "as" comodín = 3
+        # - 1 "trenes" del cacho2 + 2 "as" comodines = 3
+        # Total = 6
+        self.assertEqual(resultado, 6)
