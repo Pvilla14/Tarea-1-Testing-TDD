@@ -27,3 +27,12 @@ class ValidadorApuesta:
     
     def _es_pinta_mayor(self, pinta1, pinta2):
         return self.orden_pintas.index(pinta1) > self.orden_pintas.index(pinta2)
+    
+    def calcular_nueva_cantidad_ases(self, cantidad_actual):
+        if cantidad_actual % 2 == 0:
+            return cantidad_actual // 2 + 1
+        else:
+            return (cantidad_actual + 1) // 2
+    
+    def calcular_minimo_cambio_ases(self, cantidad_ases):
+        return cantidad_ases * 2 + 1
