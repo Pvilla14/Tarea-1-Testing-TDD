@@ -48,3 +48,33 @@ def test_validar_apuesta_subsiguiente_menor_pinta_lanza_error():
     # Act & Assert
     with pytest.raises(ValueError):
         validador.validar_apuesta_subsiguiente((2, 4), (2, 3))  # 2 trenes vs 2 cuadras
+
+def test_cambiar_a_ases_par():
+    # Arrange
+    validador = ValidadorApuesta()
+    
+    # Act
+    resultado = validador.calcular_nueva_cantidad_ases(8)  # Par
+    
+    # Assert
+    assert resultado == 5  # 8/2 + 1 = 4 + 1 = 5
+
+def test_cambiar_a_ases_impar():
+    # Arrange
+    validador = ValidadorApuesta()
+    
+    # Act
+    resultado = validador.calcular_nueva_cantidad_ases(7)  # Impar
+    
+    # Assert
+    assert resultado == 4  # 7/2 = 3.5 → redondear arriba = 4
+
+def test_cambiar_de_ases():
+    # Arrange
+    validador = ValidadorApuesta()
+    
+    # Act
+    resultado = validador.calcular_minimo_cambio_ases(2)  # 2 ases
+    
+    # Assert
+    assert resultado == 5  # 2*2 + 1 = 5
