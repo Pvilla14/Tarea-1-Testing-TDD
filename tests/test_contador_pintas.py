@@ -8,9 +8,9 @@ class TestContadorPintas(unittest.TestCase):
 
     @patch("src.Juego.cacho.Dado")
     def test_contar_pinta_sin_comodines(self, MockDado):
-        # Cacho 1: [trenes, cuadras, trenes, quinas, sextos]
+        # Cacho 1: [trenes, cuadras, trenes, quinas, sextas]
         dados_cacho1 = []
-        for valor in ["trenes", "cuadras", "trenes", "quinas", "sextos"]:
+        for valor in ["trenes", "cuadras", "trenes", "quinas", "sextas"]:
             mock_dado = MagicMock()
             mock_dado.obtener_valor.return_value = valor
             dados_cacho1.append(mock_dado)
@@ -37,9 +37,9 @@ class TestContadorPintas(unittest.TestCase):
 
     @patch("src.Juego.cacho.Dado")
     def test_contar_pinta_con_comodines(self, MockDado):
-        # Cacho 1: [trenes, as, trenes, quinas, sextos]
+        # Cacho 1: [trenes, as, trenes, quinas, sextas]
         dados_cacho1 = []
-        for valor in ["trenes", "as", "trenes", "quinas", "sextos"]:
+        for valor in ["trenes", "as", "trenes", "quinas", "sextas"]:
             mock_dado = MagicMock()
             mock_dado.obtener_valor.return_value = valor
             dados_cacho1.append(mock_dado)
@@ -72,7 +72,7 @@ class TestContadorPintas(unittest.TestCase):
         cachos = []
 
         try:
-            for pinta_valida in ["as", "tontos", "trenes", "cuadras", "quinas", "sextos"]:
+            for pinta_valida in ["as", "tontos", "trenes", "cuadras", "quinas", "sextas"]:
                 contador.contar_pinta(pinta_valida, cachos)
         except ValueError:
             self.fail("No debería dar error con pintas válidas")

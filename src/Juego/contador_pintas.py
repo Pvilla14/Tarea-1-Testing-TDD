@@ -1,3 +1,6 @@
+from src.Juego.dado import Dado
+
+
 class ContadorPintas:
     """
     Cuenta apariciones de pintas en múltiples cachos.
@@ -5,7 +8,7 @@ class ContadorPintas:
 
     def __init__(self):
         """Inicializa con las pintas válidas del juego."""
-        self.pintas_validas = ["as", "tontos", "trenes", "cuadras", "quinas", "sextos"]
+        self.pintas_validas = list(Dado.valores.values())
 
     def contar_pinta(self, pinta, cachos, usar_comodines=True):
         """
