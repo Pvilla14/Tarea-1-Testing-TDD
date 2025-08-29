@@ -2,79 +2,76 @@ import pytest
 from src.Juego.validador_apuesta import ValidadorApuesta
 
 def test_validar_apuesta_inicial_rechaza_ases_con_mas_de_un_dado():
-    # Arrange
     validador = ValidadorApuesta()
-    
-    # Act & Assert
     with pytest.raises(ValueError):
-        validador.validar_apuesta_inicial((2, 1), 2)  # 2 ases con 2 dados
+        validador.validar_apuesta_inicial((2, 1), 2)
 
 def test_validar_apuesta_inicial_permite_ases_con_un_dado():
-    # Arrange
     validador = ValidadorApuesta()
-    
-    # Act & Assert
-    # No debe lanzar excepción
-    validador.validar_apuesta_inicial((1, 1), 1)  # 1 as con 1 dado
+    validador.validar_apuesta_inicial((1, 1), 1)
 
 def test_validar_apuesta_subsiguiente_mayor_cantidad():
-    # Arrange
     validador = ValidadorApuesta()
-    
-    # Act & Assert
-    # No debe lanzar excepción
-    validador.validar_apuesta_subsiguiente((2, 3), (3, 3))  # 3 trenes vs 2 trenes
+    validador.validar_apuesta_subsiguiente((2, 3), (3, 3))
 
 def test_validar_apuesta_subsiguiente_mayor_pinta():
-    # Arrange
     validador = ValidadorApuesta()
-    
-    # Act & Assert
-    # No debe lanzar excepción
-    validador.validar_apuesta_subsiguiente((2, 3), (2, 4))  # 2 cuadras vs 2 trenes
+    validador.validar_apuesta_subsiguiente((2, 3), (2, 4))
 
 def test_validar_apuesta_subsiguiente_menor_cantidad_lanza_error():
-    # Arrange
     validador = ValidadorApuesta()
-    
-    # Act & Assert
     with pytest.raises(ValueError):
-        validador.validar_apuesta_subsiguiente((2, 3), (1, 3))  # 1 tren vs 2 trenes
+        validador.validar_apuesta_subsiguiente((2, 3), (1, 3))
 
 def test_validar_apuesta_subsiguiente_menor_pinta_lanza_error():
-    # Arrange
     validador = ValidadorApuesta()
-    
-    # Act & Assert
     with pytest.raises(ValueError):
-        validador.validar_apuesta_subsiguiente((2, 4), (2, 3))  # 2 trenes vs 2 cuadras
+        validador.validar_apuesta_subsiguiente((2, 4), (2, 3))
 
 def test_cambiar_a_ases_par():
-    # Arrange
     validador = ValidadorApuesta()
-    
-    # Act
-    resultado = validador.calcular_nueva_cantidad_ases(8)  # Par
-    
-    # Assert
-    assert resultado == 5  # 8/2 + 1 = 4 + 1 = 5
+    assert validador.calcular_nueva_cantidad_ases(8) == 5
 
 def test_cambiar_a_ases_impar():
-    # Arrange
     validador = ValidadorApuesta()
-    
-    # Act
-    resultado = validador.calcular_nueva_cantidad_ases(7)  # Impar
-    
-    # Assert
-    assert resultado == 4  # 7/2 = 3.5 → redondear arriba = 4
+    assert validador.calcular_nueva_cantidad_ases(7) == 4
 
 def test_cambiar_de_ases():
-    # Arrange
     validador = ValidadorApuesta()
-    
-    # Act
-    resultado = validador.calcular_minimo_cambio_ases(2)  # 2 ases
-    
-    # Assert
-    assert resultado == 5  # 2*2 + 1 = 5
+    assert validador.calcular_minimo_cambio_ases(2) == 5
+
+def test_validar_formato_apuesta_correcto():
+    validador = ValidadorApuesta()
+    validador._validar_formato_apuesta((2, 3))
+
+def test_validar_formato_apuesta_incorrecto():
+    validador = ValidadorApuesta()
+    with pytest.raises(ValueError):
+        validador._validar_formato_apuesta((2, 7))
+
+def test_validar_apuesta_subsiguiente_cambiar_a_ases():
+    validador = ValidadorApuesta()
+    validador.validar_apuesta_subsiguiente((8, 3), (5, 1)) 
+
+def test_validar_apuesta_subsiguiente_cambiar_de_ases():
+    validador = ValidadorApuesta()
+    validador.validar_apuesta_subsiguiente((2, 1), (5, 3))  
+
+def test_validar_apuesta_subsiguiente_cambiar_a_ases_invalido():
+    validador = ValidadorApuesta()
+    with pytest.raises(ValueError):
+        validador.validar_apuesta_subsiguiente((2, 3), (1, 1))
+
+def test_validar_apuesta_subsiguiente_cambiar_de_ases_invalido():
+    validador = ValidadorApuesta()
+    with pytest.raises(ValueError):
+        validador.validar_apuesta_subsiguiente((2, 1), (1, 3))
+
+def test_validar_apuesta_subsiguiente_igual_cantidad_igual_pinta_lanza_error():
+    validador = ValidadorApuesta()
+    with pytest.raises(ValueError):
+        validador.validar_apuesta_subsiguiente((2, 3), (2, 3))
+
+def test_es_pinta_mayor_false():
+    validador = ValidadorApuesta()
+    assert not validador._es_pinta_mayor(3, 4)
