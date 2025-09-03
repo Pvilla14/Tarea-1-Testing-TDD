@@ -7,6 +7,11 @@ class ArbitroRonda:
     Decide quién pierde o gana un dado según las reglas del juego.
     """
 
+    def __init__(self):
+        """Inicializa el árbitro con sus dependencias."""
+        self.contador = ContadorPintas()
+        self.validador = ValidadorApuesta()
+
     def resolver_duda(self, apuesta, conteo_real):
         """
         Resuelve la acción de 'duda' comparando la apuesta con el conteo real.
@@ -64,8 +69,7 @@ class ArbitroRonda:
         """
         Cuenta las pintas reales en los cachos para resolver dudas/calces.
         """
-        contador = ContadorPintas()
-        return contador.contar_pinta(pinta, cachos, usar_comodines)
+        return self.contador.contar_pinta(pinta, cachos, usar_comodines)
 
     def resolver_duda_completa(self, apuesta, cachos, usar_comodines=True):
         """
@@ -102,21 +106,11 @@ class ArbitroRonda:
     def validar_apuesta_inicial(self, apuesta, dados_jugador):
         """
         Valida una apuesta inicial usando ValidadorApuesta.
-        
-        Args:
-            apuesta (tuple): Tupla (cantidad, pinta).
-            dados_jugador (int): Cantidad de dados del jugador.
         """
-        validador = ValidadorApuesta()
-        validador.validar_apuesta_inicial(apuesta, dados_jugador)
+        self.validador.validar_apuesta_inicial(apuesta, dados_jugador)
 
     def validar_apuesta_subsiguiente(self, apuesta_actual, nueva_apuesta):
         """
         Valida una apuesta subsiguiente usando ValidadorApuesta.
-        
-        Args:
-            apuesta_actual (tuple): Apuesta anterior.
-            nueva_apuesta (tuple): Nueva apuesta a validar.
         """
-        validador = ValidadorApuesta()
-        validador.validar_apuesta_subsiguiente(apuesta_actual, nueva_apuesta)
+        self.validador.validar_apuesta_subsiguiente(apuesta_actual, nueva_apuesta)

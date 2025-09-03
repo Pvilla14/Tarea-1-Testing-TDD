@@ -91,24 +91,24 @@ def test_validar_calce_no_permitido_con_cachos():
     assert arbitro.validar_calce(dados_juego, dados_calzador, dados_totales) == False
 
 
-def test_contar_pintas_reales_sin_comodines():
+@patch('src.Juego.arbitro_ronda.ContadorPintas')
+def test_contar_pintas_reales_sin_comodines(MockContador):
     """Test que ArbitroRonda pueda contar pintas reales usando ContadorPintas"""
-    arbitro = ArbitroRonda()
+    mock_contador = MockContador.return_value
+    mock_contador.contar_pinta.return_value = 3
+    
+    arbitro = ArbitroRonda()  # Ahora usa el mock
     
     # Mock de cachos con dados específicos
     mock_cacho1 = MagicMock()
     mock_cacho2 = MagicMock()
     cachos = [mock_cacho1, mock_cacho2]
     
-    with patch('src.Juego.arbitro_ronda.ContadorPintas') as MockContador:
-        mock_contador = MockContador.return_value
-        mock_contador.contar_pinta.return_value = 3
-        
-        resultado = arbitro.contar_pintas_reales(cachos, "trenes", False)
-        
-        assert resultado == 3
-        MockContador.assert_called_once()
-        mock_contador.contar_pinta.assert_called_once_with("trenes", cachos, False)
+    resultado = arbitro.contar_pintas_reales(cachos, "trenes", False)
+    
+    assert resultado == 3
+    MockContador.assert_called_once()
+    mock_contador.contar_pinta.assert_called_once_with("trenes", cachos, False)
 
 
 def test_resolver_duda_completa_con_cachos():
@@ -142,30 +142,30 @@ def test_resolver_calce_completo_con_cachos():
         assert resultado == 'Apostador gana'  # Exactamente 3
         arbitro.contar_pintas_reales.assert_called_once_with(cachos, "cuadras", True)
 
-def test_validar_apuesta_inicial():
+@patch('src.Juego.arbitro_ronda.ValidadorApuesta')
+def test_validar_apuesta_inicial(MockValidador):
     """Test que valida apuesta inicial usando ValidadorApuesta"""
-    arbitro = ArbitroRonda()
+    mock_validador = MockValidador.return_value
+    
+    arbitro = ArbitroRonda()  # Ahora usa el mock
     apuesta = (2, 3)
     dados_jugador = 5
     
-    with patch('src.Juego.arbitro_ronda.ValidadorApuesta') as MockValidador:
-        mock_validador = MockValidador.return_value
-        
-        arbitro.validar_apuesta_inicial(apuesta, dados_jugador)
-        
-        MockValidador.assert_called_once()
-        mock_validador.validar_apuesta_inicial.assert_called_once_with(apuesta, dados_jugador)
+    arbitro.validar_apuesta_inicial(apuesta, dados_jugador)
+    
+    MockValidador.assert_called_once()
+    mock_validador.validar_apuesta_inicial.assert_called_once_with(apuesta, dados_jugador)
 
-def test_validar_apuesta_subsiguiente():
+@patch('src.Juego.arbitro_ronda.ValidadorApuesta')
+def test_validar_apuesta_subsiguiente(MockValidador):
     """Test que valida apuesta subsiguiente usando ValidadorApuesta"""
-    arbitro = ArbitroRonda()
+    mock_validador = MockValidador.return_value
+    
+    arbitro = ArbitroRonda()  # Ahora usa el mock
     apuesta_actual = (2, 3)
     nueva_apuesta = (3, 3)
     
-    with patch('src.Juego.arbitro_ronda.ValidadorApuesta') as MockValidador:
-        mock_validador = MockValidador.return_value
-        
-        arbitro.validar_apuesta_subsiguiente(apuesta_actual, nueva_apuesta)
-        
-        MockValidador.assert_called_once()
-        mock_validador.validar_apuesta_subsiguiente.assert_called_once_with(apuesta_actual, nueva_apuesta)
+    arbitro.validar_apuesta_subsiguiente(apuesta_actual, nueva_apuesta)
+    
+    MockValidador.assert_called_once()
+    mock_validador.validar_apuesta_subsiguiente.assert_called_once_with(apuesta_actual, nueva_apuesta)
