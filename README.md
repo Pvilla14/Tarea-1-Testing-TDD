@@ -88,8 +88,8 @@ gestor.ronda_inicial()
 ## Funcionalidades Implementadas
 
 ### 🎲 Sistema de Dados
-- **Dado**: Genera valores 1-6 con nomenclatura chilena
-- **Cacho**: Maneja conjunto de 5 dados con funciones de agitar y ocultar
+- **Dado**: Genera valores del 1-6 
+- **Cacho**: Maneja un conjunto de 5 dados los cuales se pueden agitar y ocultar
 
 ### 🎯 Validación de Apuestas
 - Verifica apuestas válidas (cantidad mayor o pinta superior)
@@ -99,12 +99,11 @@ gestor.ronda_inicial()
 ### 📊 Conteo de Pintas
 - Cuenta apariciones de pintas específicas
 - Maneja Ases como comodines automáticamente
-- Soporte para rondas especiales de un dado
+- Soporte para rondas cuando el jugador tiene solamente un dado
 
 ### ⚖️ Arbitraje
-- Determina ganadores cuando se "duda"
-- Implementa lógica de "calzar" exacto
-- Maneja pérdida/ganancia de dados
+- Determina quién gana cuando se "duda" o "calza"
+- Maneja pérdida/obtención de dados
 
 ### 🎮 Gestión de Partida
 - Administra múltiples jugadores
@@ -124,10 +123,8 @@ Cada funcionalidad tiene commits específicos siguiendo este patrón.
 ## Integración Continua
 
 El proyecto incluye GitHub Actions que:
-- ✅ Ejecuta automáticamente todas las pruebas
-- 📊 Verifica cobertura de código > 90%
-- 🔍 Valida estilo de código con flake8
-- 🚀 Se ejecuta en cada push y pull request
+- Ejecuta automáticamente todas las pruebas
+- Se ejecuta en cada push y pull request
 
 ## Cobertura de Pruebas
 El proyecto mantiene una cobertura superior al 90% en todas las clases principales:
