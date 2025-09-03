@@ -1,7 +1,13 @@
 # Kata TDD: Simulador del Juego Dudo Chileno
 
+## Estudiantes:
+
+- Pablo Villagrán Hermanns (2023439231)
+-
+-
+
 ## Contexto
-El Dudo es un juego tradicional chileno que se juega con dados en "cachos". Su tarea es implementar un simulador que maneje la lógica central del juego usando TDD. Como parece haber tantas variantes de reglas como jugadores, vamos a usar las reglas de la siguiente página: https://www.donpichuncho.cl/aprende-a-jugar-dudo-en-cacho
+El Dudo es un juego tradicional chileno que se juega con dados en "cachos". Nosotros implementamos una versión de juego en la cual manejamos distintas clases para lograr ejecutar el juego para distintas personas y que sean capaces de realizar las distintas acciones indicadas en la siguiente página: https://www.donpichuncho.cl/aprende-a-jugar-dudo-en-cacho
 
 ## Objetivos
 - Aplicar TDD con Python3 y pytest y pytest-mock
@@ -53,54 +59,17 @@ Implementa una clase `GestorPartida` que:
 
 ## Aspectos Técnicos
 
-### Ejecución de los tests
-Para ejecutar los tests, después de instalar las dependencias con pip o equivalente, pueden usar:
-```
-pytest
-o
-python3 -m pytest
-```
+Para la implementación usamos la metodología TDD, con el fin de asegurarnos que al nuestras clases cumplieran con los requerimientos indicados por las reglas del juego, para ello nos dividimos el trabajo y cada uno implementó ciertas clases y se preocupo de cumplir por lo parámetros indicados.
 
-Para saber el detalle de la cobertura de los tests, pueden ejecutar:
-```
-pytest --cov=src --cov-report=term-missing
-o
-python3 -m pytest --cov=src --cov-report=term-missing
-```
+Junto con esto trabajamos usando GitHub Actions, el cual nos permitía saber cunado nuestros test estaban siendo correctamente validados, y cuando ocurría algun error leve lo pudiesemos corregir.
+
+### Mocking 
+Dentro del proyecto utilizamos mokin para testear en un ambiente controlado el juego, llegando a tener test con moking en casi todas nuestras clases, dado que la aleatoriedad que nos proporcionaba el generador aleatorio de los dados no siempre era combeniente, por lo que en algunas ocaciones era preferible trabajar con valores generados intencionalmente.
 
 
-### Mocking Requerido
-- **Generador de números aleatorios**: Para hacer pruebas deterministas
-- **Aislamiento de las pruebas**: Mocks para aislar las diferentes partes de la lógica de negocio (excluyendo las clases orientadas a orquestaciones que pueden no hacer mocking)
-
-###  Ejemplo de estructura
-Aquí hay un ejemplo de estructura de proyecto que podría obtener y que le puede ayudar. Evidentemente, con el TDD podría obtener una estructura emergente diferente (más archivos fuente o algunos ausentes), pero debe respetar la organización del código en varios archivos dentro de /src y /tests.
-En cualquier caso, hagan sus estructuras de a poquito a medida que avanzan con el TDD.
-
-
-```
-src/
-├── juego/
-│   ├── dado.py
-│   ├── cacho.py
-│   ├── validador_apuesta.py
-│   ├── contador_pintas.py
-│   ├── arbitro_ronda.py
-│   └── gestor_partida.py
-├── servicios/
-│   └── generador_aleatorio.py
-tests/
-├── test_dado.py
-├── test_cacho.py
-├── test_validador_apuesta.py
-├── test_contador_pintas.py
-├── test_arbitro_ronda.py
-└── test_gestor_partida.py
-```
 
 ## Metodología TDD - Commits Obligatorios
 
-**IMPORTANTE**: Para evaluar que siguieron TDD correctamente, deben hacer commits siguiendo el ciclo Rojo-Verde-Refactor:
 
 ### Patrón de Commits Requerido
 Para cada funcionalidad, deben hacer **exactamente 3 commits** en este orden:
@@ -120,15 +89,7 @@ Para cada funcionalidad, deben hacer **exactamente 3 commits** en este orden:
    - Todos los tests siguen pasando
    - Solo si hay algo que refactorizar (sino omitir este commit)
 
-### Ejemplo de Secuencia de Commits
-```
- RED: test para generar valor aleatorio en dado - falla como esperado
- GREEN: implementación mínima para generar valor aleatorio en dado  
- REFACTOR: mejora método de generación con dependency injection
- RED: test para denominar pinta del dado - falla como esperado
- GREEN: implementación mínima para denominar pinta del dado
- ...
-```
+    
 
 ## Entregables
 1. Código fuente con cobertura de pruebas > 90%
