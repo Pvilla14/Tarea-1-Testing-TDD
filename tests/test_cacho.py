@@ -17,6 +17,7 @@ class TestCacho(unittest.TestCase):
     def test_ver_dados_null(self):
         cacho = Cacho()
         self.assertTrue(cacho is not None)
+        self.assertIsNone(cacho.ver_dados())
 
     def test_ver_dados_not_null(self):
         cacho = Cacho()

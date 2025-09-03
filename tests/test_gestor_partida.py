@@ -1,0 +1,51 @@
+import unittest
+from unittest.mock import patch, MagicMock
+import io
+
+import src.Juego.cacho
+from src.Juego.gestor_partida import GestorPartida
+from src.Juego.cacho import Cacho
+
+class TestGestorPartida(unittest.TestCase):
+
+    @patch("builtins.input", side_effect=["5"])
+    @patch("sys.stdout", new_callable=io.StringIO)
+    def test_crear(self, mock_stdout, mock_input):
+        gestor = GestorPartida()
+
+        self.assertIsInstance(gestor, GestorPartida)
+
+        salida = mock_stdout.getvalue().strip()
+        self.assertEqual(salida, "Bienvenido a una nueva partida de cachos. Indique la cantidad de jugadores:")
+
+    @patch("builtins.input", side_effect= "5")
+    def test_cant_jugadores(self, mock_input):
+
+        gestor = GestorPartida()
+        self.assertEqual(gestor.jugadores_restantes(), 5)
+        self.assertEqual(mock_input.call_count, 1)
+        self.assertEqual(gestor.dados_iniciales, 25)
+
+    @patch("builtins.input", side_effect=["2", "1", "2", "Tontos"])
+    def test_apuesta_inicial(self, mock_input):
+        gestor = GestorPartida()
+
+        gestor.rondas_siguientes = MagicMock()
+        gestor.ronda_inicial()
+
+        self.assertEqual(gestor.direccion, "Derecha")
+        self.assertEqual(gestor.apuesta_actual, (2,2) )
+        self.assertEqual(gestor.apuesta_anterior, gestor.apuesta_actual)
+        gestor.rondas_siguientes.assert_called_once_with(0)
+        self.assertEqual(mock_input.call_count, 4)
+
+
+
+
+
+
+
+
+
+
+
