@@ -1,3 +1,5 @@
+from src.Juego.contador_pintas import ContadorPintas
+
 class ArbitroRonda:
     """
     Arbitra la resolución de dudas y calces en una ronda de Dudo.
@@ -56,3 +58,10 @@ class ArbitroRonda:
 
     def mitad(self, total):
         return (total + 1) // 2
+
+    def contar_pintas_reales(self, cachos, pinta, usar_comodines=True):
+        """
+        Cuenta las pintas reales en los cachos para resolver dudas/calces.
+        """
+        contador = ContadorPintas()
+        return contador.contar_pinta(pinta, cachos, usar_comodines)
