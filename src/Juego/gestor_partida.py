@@ -128,7 +128,6 @@ class GestorPartida:
             print("Elija una opción: ")
             print("1) Apostar")
             print("2) Dudar")
-
             puede_calzar = self.arbitro.validar_calce(self.cant_dados_en_juego(), self.jugadores[jugador].ver_cant_dados(), self.dados_iniciales)
             puede_pasar = self.jugadores[jugador].cant_dados == 5
 

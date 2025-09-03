@@ -39,7 +39,24 @@ class TestGestorPartida(unittest.TestCase):
         gestor.rondas_siguientes.assert_called_once_with(0)
         self.assertEqual(mock_input.call_count, 4)
 
+    @patch("src.Juego.dado.GeneradorAleatorio.generar", side_effect=[1, 2, 3, 4, 5] * 2)
+    @patch("src.Juego.cacho.Cacho.agitar", side_effect=[1, 2]*10)
+    @patch("builtins.input", side_effect=["2","1","2","Tontos","2","1","3","3","Tontos","1","1","5","Tontos","2"])#cant_j,dir,apuesta,dudar(falla),dir,apuesta,apuesta,duda(acierta),gana
+    def test_gestor_juego(self, mock_input, mock_generar, mock_agitar):
+        gestor = GestorPartida()
+        for jugador in gestor.jugadores:
+            valores = [dado.valor for dado in jugador.dados]
+            self.assertEqual(valores, [1,2,3,4,5])
 
+        #para metodos de practicidad limitaremos los dados a 2 por jugador por el test
+        gestor.limitar_dados(2)
+        for jugador in gestor.jugadores:
+            valores = [dado.valor for dado in jugador.dados]
+            self.assertEqual(valores, [1,2])
+        #ambos jugadores tienen los valores [1,2] en sus dados
+
+        with self.assertRaises(SystemExit):
+            gestor.ronda_inicial()
 
 
 
