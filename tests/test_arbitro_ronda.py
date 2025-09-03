@@ -141,3 +141,17 @@ def test_resolver_calce_completo_con_cachos():
         
         assert resultado == 'Apostador gana'  # Exactamente 3
         arbitro.contar_pintas_reales.assert_called_once_with(cachos, "cuadras", True)
+
+def test_validar_apuesta_inicial():
+    """Test que valida apuesta inicial usando ValidadorApuesta"""
+    arbitro = ArbitroRonda()
+    apuesta = (2, 3)
+    dados_jugador = 5
+    
+    with patch('src.Juego.arbitro_ronda.ValidadorApuesta') as MockValidador:
+        mock_validador = MockValidador.return_value
+        
+        arbitro.validar_apuesta_inicial(apuesta, dados_jugador)
+        
+        MockValidador.assert_called_once()
+        mock_validador.validar_apuesta_inicial.assert_called_once_with(apuesta, dados_jugador)
