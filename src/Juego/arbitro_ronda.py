@@ -1,4 +1,5 @@
 from src.Juego.contador_pintas import ContadorPintas
+from src.Juego.validador_apuesta import ValidadorApuesta
 
 class ArbitroRonda:
     """
@@ -97,3 +98,14 @@ class ArbitroRonda:
         cantidad, pinta = apuesta
         conteo_real = self.contar_pintas_reales(cachos, pinta, usar_comodines)
         return self.resolver_calce(apuesta, conteo_real)
+
+    def validar_apuesta_inicial(self, apuesta, dados_jugador):
+        """
+        Valida una apuesta inicial usando ValidadorApuesta.
+        
+        Args:
+            apuesta (tuple): Tupla (cantidad, pinta).
+            dados_jugador (int): Cantidad de dados del jugador.
+        """
+        validador = ValidadorApuesta()
+        validador.validar_apuesta_inicial(apuesta, dados_jugador)
