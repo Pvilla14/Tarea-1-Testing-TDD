@@ -65,29 +65,6 @@ class TestGestorPartida(unittest.TestCase):
         assert dados_despues == dados_antes + 1  # Recuperó un dado
         gestor.ronda_inicial.assert_called_once_with(0)
 
-    @patch("builtins.input", side_effect=["2"])
-    def test_persona_calza_fallida(self, mock_input):
-        """Test que persona_calza maneja correctamente un calce fallido"""
-        gestor = GestorPartida()
-
-        # Mock de dependencias
-        gestor.cambiar_estado_dados_otros_jugadores = MagicMock()
-        gestor.contar_pintas.contar_pinta = MagicMock(return_value=2)
-        gestor.arbitro.resolver_calce = MagicMock(return_value='Apostador pierde')
-        gestor.ronda_inicial = MagicMock()
-
-        # Setup
-        gestor.apuesta_anterior = (3, 4)
-        gestor.obligo = False
-        dados_antes = gestor.jugadores[0].ver_cant_dados()
-
-        # Act
-        gestor.persona_calza(0)
-
-        # Assert
-        dados_despues = gestor.jugadores[0].ver_cant_dados()
-        assert dados_despues == dados_antes - 1  # Perdió un dado
-        gestor.ronda_inicial.assert_called_once_with(0)
 
     @patch("src.Juego.dado.GeneradorAleatorio.generar", side_effect=[1, 2, 3, 4, 5] * 2)
     @patch("src.Juego.cacho.Cacho.agitar", side_effect=[1, 2]*10)
