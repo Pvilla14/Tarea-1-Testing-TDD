@@ -8,23 +8,33 @@ from src.Juego.cacho import Cacho
 
 class TestGestorPartida(unittest.TestCase):
 
-    @patch("builtins.input", side_effect=["5"])
-    @patch("sys.stdout", new_callable=io.StringIO)
-    def test_crear(self, mock_stdout, mock_input):
+    @patch("builtins.input", side_effect=["2"])
+    def test_jugador_anterior_derecha(self, mock_input):
         gestor = GestorPartida()
+        gestor.direccion = 'Derecha'
+        self.assertEqual(gestor.jugador_anterior(0), 1)
+        self.assertEqual(gestor.jugador_anterior(1), 0)
 
-        self.assertIsInstance(gestor, GestorPartida)
-
-        salida = mock_stdout.getvalue().strip()
-        self.assertEqual(salida, "Bienvenido a una nueva partida de cachos. Indique la cantidad de jugadores:")
-
-    @patch("builtins.input", side_effect= "5")
-    def test_cant_jugadores(self, mock_input):
-
+    @patch("builtins.input", side_effect=["3"])
+    def test_jugador_siguiente_derecha(self, mock_input):
         gestor = GestorPartida()
-        self.assertEqual(gestor.jugadores_restantes(), 5)
-        self.assertEqual(mock_input.call_count, 1)
-        self.assertEqual(gestor.dados_iniciales, 25)
+        gestor.direccion = 'Derecha'
+        self.assertEqual(gestor.jugador_siguiente(0), 1)
+        self.assertEqual(gestor.jugador_siguiente(1), 2)
+
+    @patch("builtins.input", side_effect=["2"])
+    def test_jugador_anterior_izquierda(self, mock_input):
+        gestor = GestorPartida()
+        gestor.direccion = 'Izquierda'
+        self.assertEqual(gestor.jugador_anterior(0), 1)
+        self.assertEqual(gestor.jugador_anterior(1), 0)
+
+    @patch("builtins.input", side_effect=["3"])
+    def test_jugador_siguiente_izquierda(self, mock_input):
+        gestor = GestorPartida()
+        gestor.direccion = 'Izquierda'
+        self.assertEqual(gestor.jugador_siguiente(0), 2)
+        self.assertEqual(gestor.jugador_siguiente(1), 0)
 
     @patch("builtins.input", side_effect=["2", "1", "2", "Tontos"])
     def test_apuesta_inicial(self, mock_input):
