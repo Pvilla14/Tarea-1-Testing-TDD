@@ -81,3 +81,19 @@ class ArbitroRonda:
         cantidad, pinta = apuesta
         conteo_real = self.contar_pintas_reales(cachos, pinta, usar_comodines)
         return self.resolver_duda(apuesta, conteo_real)
+
+    def resolver_calce_completo(self, apuesta, cachos, usar_comodines=True):
+        """
+        Resuelve un calce contando automáticamente las pintas en los cachos.
+        
+        Args:
+            apuesta (tuple): Tupla (cantidad, pinta) apostada.
+            cachos (list): Lista de objetos Cacho para contar.
+            usar_comodines (bool): Si los ases cuentan como comodines.
+            
+        Returns:
+            str: 'Apostador gana' o 'Apostador pierde'
+        """
+        cantidad, pinta = apuesta
+        conteo_real = self.contar_pintas_reales(cachos, pinta, usar_comodines)
+        return self.resolver_calce(apuesta, conteo_real)
