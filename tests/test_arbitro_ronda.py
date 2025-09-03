@@ -109,3 +109,19 @@ def test_contar_pintas_reales_sin_comodines():
         assert resultado == 3
         MockContador.assert_called_once()
         mock_contador.contar_pinta.assert_called_once_with("trenes", cachos, False)
+
+
+def test_resolver_duda_completa_con_cachos():
+    """Test que resuelve duda contando automáticamente las pintas en cachos"""
+    arbitro = ArbitroRonda()
+    apuesta = (2, "trenes")
+    
+    mock_cacho1 = MagicMock()
+    mock_cacho2 = MagicMock()
+    cachos = [mock_cacho1, mock_cacho2]
+    
+    with patch.object(arbitro, 'contar_pintas_reales', return_value=1):
+        resultado = arbitro.resolver_duda_completa(apuesta, cachos)
+        
+        assert resultado == 'Apostador pierde'  # Solo hay 1, apostó 2
+        arbitro.contar_pintas_reales.assert_called_once_with(cachos, "trenes", True)
