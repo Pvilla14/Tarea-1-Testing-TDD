@@ -36,9 +36,10 @@ class GestorPartida:
         self.obligo = False
         self.contar_pintas = ContadorPintas()
         self.arbitro = ArbitroRonda()
+        '''Se inicializan las variables para manejar los dados y la info'''
 
     def ronda_inicial(self, jugador_inicial : int = 0):
-
+    #se llama al metodo y se inicia el juego, se crea la primera apuesta y se indica la direccion del juego
         for j in self.jugadores:
             j.agitar()
 
@@ -102,7 +103,8 @@ class GestorPartida:
         self.rondas_siguientes(jugador_inicial)
 
     def rondas_siguientes(self, jugador_inicial : int = 0):
-
+        #esto activa un ciclo, en el cual el jugador puede apostar, dudar, o calzar,
+        # dependiendo de las condiciones de juego
         jugador = self.jugador_siguiente(jugador_inicial)
 
         if not self.obligo:
@@ -123,7 +125,7 @@ class GestorPartida:
                 self.jugadores[jugador_inicial].cambiar_visibles()
                 print(self.jugadores[jugador_inicial].ver_dados())
                 self.jugadores[jugador_inicial].cambiar_visibles()
-
+            #formas de ver los dados, dependiendo de si se está obligado o no
         while True:
             print("Elija una opción: ")
             print("1) Apostar")
@@ -157,6 +159,7 @@ class GestorPartida:
             self.apuesta_actual = self.subir_apuesta(jugador)
             self.jugadores[jugador].cambiar_visibles()
             self.rondas_siguientes(jugador)
+            #se llama a la nueva funcion para que el siguiente jugador juegue
 
         elif accion == 2: # dudar la apuesta
             self.persona_duda(jugador)
@@ -286,6 +289,7 @@ class GestorPartida:
             return (jugador_actual - 1) % len(self.jugadores)
 
     def cambiar_estado_dados_otros_jugadores(self, jugador_actual):
+        # sirve para ver los dados en el caso de obligar
         for j in self.jugadores:
             if j != jugador_actual:
                 j.cambiar_visibles()
@@ -319,10 +323,12 @@ class GestorPartida:
                 j.cambiar_visibles()
 
     def limitar_dados(self, cant):
+        #usado en los test para limitar los dados a cierta cantidad
         for j in self.jugadores:
             for i in range(5 - cant):
                 j.perder_dado()
 
     def fin_partida(self, jugador):
+        #se termina el juego cortando el programa
         print(f"La partida a terminado")
         sys.exit(0)

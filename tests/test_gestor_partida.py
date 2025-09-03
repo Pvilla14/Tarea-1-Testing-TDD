@@ -57,7 +57,14 @@ class TestGestorPartida(unittest.TestCase):
 
         with self.assertRaises(SystemExit):
             gestor.ronda_inicial()
-
+            '''al iniciar el test se van introduciendo valores gracias a 
+            mock_input, los cuales naturalmente se introducirian por terminal,
+            con esto, la partida se desarrolla sola, y cuando uno de los jugadores
+            pierde se termina de manera automatica.
+            Las entradas de mock_input las verificamos para que pudieran generar un 
+            flujo sencillo y directo a la victoria, y acortamos la cantidad de dados para
+            no extender tanto el test
+            '''
 
 
 
