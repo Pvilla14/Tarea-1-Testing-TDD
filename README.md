@@ -1,103 +1,162 @@
 # Kata TDD: Simulador del Juego Dudo Chileno
 
-## Estudiantes:
-
+## Estudiantes
 - Pablo Villagrán Hermanns (2023439231)
--
--
+- Daniel Ignacio Aburto Rivera (2023433900)
+- Jorge Slimming Lagos (2023409901)
 
-## Contexto
-El Dudo es un juego tradicional chileno que se juega con dados en "cachos". Nosotros implementamos una versión de juego en la cual manejamos distintas clases para lograr ejecutar el juego para distintas personas y que sean capaces de realizar las distintas acciones indicadas en la siguiente página: https://www.donpichuncho.cl/aprende-a-jugar-dudo-en-cacho
+## Descripción del Proyecto
+Este proyecto implementa un simulador del juego tradicional chileno "Dudo" utilizando metodología TDD (Test-Driven Development). El juego se basa en las reglas oficiales disponibles en [Don Pichuncho](https://www.donpichuncho.cl/aprende-a-jugar-dudo-en-cacho).
 
-## Objetivos
-- Aplicar TDD con Python3 y pytest y pytest-mock
-- Usar mocking cuando sea apropiado
-- Diseñar clases con responsabilidades claras
-- Manejar lógica de juego compleja paso a paso
-- Introducción a CI con GitHub Actions 
+## Estructura del Proyecto
+```
+Tarea-1-Testing-TDD/
+├── src/                    # Código fuente principal
+│   ├── dado.py            # Clase Dado
+│   ├── cacho.py           # Clase Cacho (conjunto de 5 dados)
+│   ├── validador_apuesta.py # Validación de apuestas
+│   ├── contador_pintas.py  # Conteo de pintas en el juego
+│   ├── arbitro_ronda.py   # Lógica de arbitraje de rondas
+│   └── gestor_partida.py  # Gestión completa de la partida
+├── tests/                 # Pruebas unitarias
+│   ├── test_dado.py
+│   ├── test_cacho.py
+│   ├── test_validador_apuesta.py
+│   ├── test_contador_pintas.py
+│   ├── test_arbitro_ronda.py
+│   └── test_gestor_partida.py
+├── .github/workflows/     # GitHub Actions para CI/CD
+├── requirements.txt       # Dependencias del proyecto
+└── README.md             # Este archivo
+```
 
-## Requerimientos Funcionales
+## Requisitos del Sistema
+- Python 3.8 o superior
+- pip (gestor de paquetes de Python)
 
-### Sistema de Dados y Pintas
-Implementa una clase `Dado` que:
-- Genere valores del 1 al 6
-- Use las denominaciones tradicionales:
-  - 1: "As", 2: "Tonto", 3: "Tren", 4: "Cuadra", 5: "Quina", 6: "Sexto"
+## Instalación
 
-Implementa una clase `Cacho` que:
-- Contenga 5 dados
-- Permita "agitar" (regenerar valores)
-- Oculte/muestre los dados según el estado del juego
+### 1. Clonar el Repositorio
+```bash
+git clone https://github.com/usuario/Tarea-1-Testing-TDD.git
+cd Tarea-1-Testing-TDD
+```
 
-### Validador de Apuestas
-Implementa una clase `ValidadorApuesta` que verifique:
-- Si una nueva apuesta es válida (mayor cantidad o pinta superior)
-- Las reglas especiales de los Ases:
-  - Al cambiar A ases: dividir cantidad actual por 2 (par: +1, impar: redondear arriba)
-  - Al cambiar DE ases: multiplicar por 2 y sumar 1
-- Que no se pueda partir con Ases (excepto con un dado)
+### 2. Crear Entorno Virtual (Recomendado)
+```bash
+# Windows
+python -m venv venv
+venv\Scripts\activate
 
-### Contador de Pintas
-Implementa una clase `ContadorPintas` que:
-- Cuente apariciones de una pinta específica en todos los dados
-- Trate los Ases como comodines (suman a cualquier pinta apostada)
-- Maneje el caso especial cuando los Ases NO son comodines (ronda de un dado)
+# Linux/macOS
+python3 -m venv venv
+source venv/bin/activate
+```
 
-### Árbitro del Juego
-Implementa una clase `ArbitroRonda` que:
-- Determine el resultado cuando un jugador "duda"
-- Maneje la lógica de "calzar" (debe ser exacto)
-- Decida quién pierde/gana un dado
-- Valide las condiciones para "calzar" (mitad de dados en juego O jugador con un dado)
+### 3. Instalar Dependencias
+```bash
+pip install -r requirements.txt
+```
 
-### Gestor de Partida
-Implementa una clase `GestorPartida` que:
-- Administre múltiples jugadores y sus dados
-- Determine quién inicia cada ronda
-- Maneje el flujo de turnos
-- Detecte cuándo alguien queda con un dado (para activar reglas especiales)
+## Ejecución
 
-## Aspectos Técnicos
+### Ejecutar las Pruebas
+```bash
+# Ejecutar todas las pruebas
+pytest
 
-Para la implementación usamos la metodología TDD, con el fin de asegurarnos que al nuestras clases cumplieran con los requerimientos indicados por las reglas del juego, para ello nos dividimos el trabajo y cada uno implementó ciertas clases y se preocupo de cumplir por lo parámetros indicados.
+# Ejecutar pruebas con reporte de cobertura
+pytest --cov=src --cov-report=html
 
-Junto con esto trabajamos usando GitHub Actions, el cual nos permitía saber cunado nuestros test estaban siendo correctamente validados, y cuando ocurría algun error leve lo pudiesemos corregir.
+# Ejecutar pruebas en modo verbose
+pytest -v
+```
 
-### Mocking 
-Dentro del proyecto utilizamos mokin para testear en un ambiente controlado el juego, llegando a tener test con moking en casi todas nuestras clases, dado que la aleatoriedad que nos proporcionaba el generador aleatorio de los dados no siempre era combeniente, por lo que en algunas ocaciones era preferible trabajar con valores generados intencionalmente.
+### Usar el Simulador
+```python
+from src.gestor_partida import GestorPartida
 
+# Crear una partida con 3 jugadores
+gestor = GestorPartida(['Ana', 'Luis', 'María'])
 
+# Iniciar el juego
+gestor.iniciar_partida()
 
-## Metodología TDD - Commits Obligatorios
+# El juego se ejecuta automáticamente con las reglas implementadas
+```
 
+## Funcionalidades Implementadas
 
-### Patrón de Commits Requerido
-Para cada funcionalidad, deben hacer **exactamente 3 commits** en este orden:
+### 🎲 Sistema de Dados
+- **Dado**: Genera valores 1-6 con nomenclatura chilena
+- **Cacho**: Maneja conjunto de 5 dados con funciones de agitar y ocultar
 
-1. **🔴 ROJO**: `git commit -m "RED: test para [funcionalidad] - falla como esperado"`
-   - Solo el test, sin implementación
-   - El test debe fallar por la razón correcta
-   - Ejecutar `pytest` debe mostrar el fallo
+### 🎯 Validación de Apuestas
+- Verifica apuestas válidas (cantidad mayor o pinta superior)
+- Maneja reglas especiales de los Ases como comodines
+- Valida restricciones de apuestas iniciales
 
-2. **🟢 VERDE**: `git commit -m "GREEN: implementación mínima para [funcionalidad]"`
-   - Código mínimo para hacer pasar el test
-   - Ejecutar `pytest` debe mostrar todos los tests pasando
-   - No importa si el código es "feo" en esta etapa
+### 📊 Conteo de Pintas
+- Cuenta apariciones de pintas específicas
+- Maneja Ases como comodines automáticamente
+- Soporte para rondas especiales de un dado
 
-3. **🔵 REFACTOR**: `git commit -m "REFACTOR: mejora código de [funcionalidad]"`
-   - Mejorar la implementación sin cambiar funcionalidad
-   - Todos los tests siguen pasando
-   - Solo si hay algo que refactorizar (sino omitir este commit)
+### ⚖️ Arbitraje
+- Determina ganadores cuando se "duda"
+- Implementa lógica de "calzar" exacto
+- Maneja pérdida/ganancia de dados
 
-    
+### 🎮 Gestión de Partida
+- Administra múltiples jugadores
+- Control de turnos y rondas
+- Detección automática de condiciones especiales
 
-## Entregables
-1. Código fuente con cobertura de pruebas > 90%
-2. Todas las pruebas deben pasar
-3. Implementación que siga principios SOLID
-4. Historial de commits en el formato descrito
-5. README con instrucciones de ejecución
-6. Una GitHub Action que ejecute sus tests (¡Verde por el último commit!)
+## Metodología TDD Aplicada
+
+El proyecto sigue estrictamente la metodología TDD con el patrón **RED-GREEN-REFACTOR**:
+
+1. **🔴 RED**: Escribir test que falle
+2. **🟢 GREEN**: Implementación mínima para pasar el test
+3. **🔵 REFACTOR**: Mejorar el código manteniendo funcionalidad
+
+Cada funcionalidad tiene commits específicos siguiendo este patrón.
+
+## Integración Continua
+
+El proyecto incluye GitHub Actions que:
+- ✅ Ejecuta automáticamente todas las pruebas
+- 📊 Verifica cobertura de código > 90%
+- 🔍 Valida estilo de código con flake8
+- 🚀 Se ejecuta en cada push y pull request
+
+## Cobertura de Pruebas
+El proyecto mantiene una cobertura superior al 90% en todas las clases principales:
+
+```bash
+# Generar reporte de cobertura
+pytest --cov=src --cov-report=term-missing
+```
+
+## Contribuir al Proyecto
+
+1. Fork el repositorio
+2. Crea una rama para tu feature (`git checkout -b feature/nueva-funcionalidad`)
+3. Sigue la metodología TDD para cualquier cambio
+4. Asegúrate de que todas las pruebas pasen
+5. Crea un Pull Request
+
+## Tecnologías Utilizadas
+- **Python 3.8+**: Lenguaje principal
+- **pytest**: Framework de testing
+- **pytest-mock**: Mocking para pruebas
+- **pytest-cov**: Cobertura de código
+- **GitHub Actions**: CI/CD
+
+## Licencia
+Este proyecto es parte de un trabajo académico para el curso de Testing y TDD.
+
+---
+**Nota**: Para cualquier duda sobre el juego Dudo, consultar las [reglas oficiales](https://www.donpichuncho.cl/aprende-a-jugar-dudo-en-cacho).
 
 
 
