@@ -155,3 +155,17 @@ def test_validar_apuesta_inicial():
         
         MockValidador.assert_called_once()
         mock_validador.validar_apuesta_inicial.assert_called_once_with(apuesta, dados_jugador)
+
+def test_validar_apuesta_subsiguiente():
+    """Test que valida apuesta subsiguiente usando ValidadorApuesta"""
+    arbitro = ArbitroRonda()
+    apuesta_actual = (2, 3)
+    nueva_apuesta = (3, 3)
+    
+    with patch('src.Juego.arbitro_ronda.ValidadorApuesta') as MockValidador:
+        mock_validador = MockValidador.return_value
+        
+        arbitro.validar_apuesta_subsiguiente(apuesta_actual, nueva_apuesta)
+        
+        MockValidador.assert_called_once()
+        mock_validador.validar_apuesta_subsiguiente.assert_called_once_with(apuesta_actual, nueva_apuesta)
