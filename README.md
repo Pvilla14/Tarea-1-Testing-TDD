@@ -74,13 +74,13 @@ pytest -v
 
 ### Usar el Simulador
 ```python
-from src.gestor_partida import GestorPartida
+from src.Juego.gestor_partida import GestorPartida
 
 # Crear una partida con 3 jugadores
-gestor = GestorPartida(['Ana', 'Luis', 'María'])
+gestor = GestorPartida()
 
 # Iniciar el juego
-gestor.iniciar_partida()
+gestor.ronda_inicial()
 
 # El juego se ejecuta automáticamente con las reglas implementadas
 ```
