@@ -109,3 +109,14 @@ class ArbitroRonda:
         """
         validador = ValidadorApuesta()
         validador.validar_apuesta_inicial(apuesta, dados_jugador)
+
+    def validar_apuesta_subsiguiente(self, apuesta_actual, nueva_apuesta):
+        """
+        Valida una apuesta subsiguiente usando ValidadorApuesta.
+        
+        Args:
+            apuesta_actual (tuple): Apuesta anterior.
+            nueva_apuesta (tuple): Nueva apuesta a validar.
+        """
+        validador = ValidadorApuesta()
+        validador.validar_apuesta_subsiguiente(apuesta_actual, nueva_apuesta)
