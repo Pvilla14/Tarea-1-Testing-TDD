@@ -65,3 +65,19 @@ class ArbitroRonda:
         """
         contador = ContadorPintas()
         return contador.contar_pinta(pinta, cachos, usar_comodines)
+
+    def resolver_duda_completa(self, apuesta, cachos, usar_comodines=True):
+        """
+        Resuelve una duda contando automáticamente las pintas en los cachos.
+        
+        Args:
+            apuesta (tuple): Tupla (cantidad, pinta) apostada.
+            cachos (list): Lista de objetos Cacho para contar.
+            usar_comodines (bool): Si los ases cuentan como comodines.
+            
+        Returns:
+            str: 'Apostador pierde' o 'Dudador pierde'
+        """
+        cantidad, pinta = apuesta
+        conteo_real = self.contar_pintas_reales(cachos, pinta, usar_comodines)
+        return self.resolver_duda(apuesta, conteo_real)
