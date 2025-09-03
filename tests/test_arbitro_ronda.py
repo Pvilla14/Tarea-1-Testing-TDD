@@ -1,6 +1,7 @@
 import pytest
 from src.Juego.arbitro_ronda import ArbitroRonda
 from src.Juego.cacho import Cacho
+from unittest.mock import patch, MagicMock
 
 
 def test_resolver_duda_pierde_apostador():
@@ -88,3 +89,23 @@ def test_validar_calce_no_permitido_con_cachos():
 
     # mitad de dados restantes y jugador no tiene 1 solo dado
     assert arbitro.validar_calce(dados_juego, dados_calzador, dados_totales) == False
+
+
+def test_contar_pintas_reales_sin_comodines():
+    """Test que ArbitroRonda pueda contar pintas reales usando ContadorPintas"""
+    arbitro = ArbitroRonda()
+    
+    # Mock de cachos con dados específicos
+    mock_cacho1 = MagicMock()
+    mock_cacho2 = MagicMock()
+    cachos = [mock_cacho1, mock_cacho2]
+    
+    with patch('src.Juego.arbitro_ronda.ContadorPintas') as MockContador:
+        mock_contador = MockContador.return_value
+        mock_contador.contar_pinta.return_value = 3
+        
+        resultado = arbitro.contar_pintas_reales(cachos, "trenes", False)
+        
+        assert resultado == 3
+        MockContador.assert_called_once()
+        mock_contador.contar_pinta.assert_called_once_with("trenes", cachos, False)
